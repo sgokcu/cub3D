@@ -616,24 +616,31 @@ int get_max_x(char **map)
 	return (max_value);
 }
 
+int char_checker(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'W' || c == 'E' || c == '0' || c == '1')
+		return (1);
+	return (0);
+}
+
+
 int checker(char **map, int y, int x)
 {
-	char *str = ft_strdup("NSWE01");
+	// char *str = ft_strdup("NSWE01");
 	if (y == 0 || x == 0)
-		return (free(str), 0);
-	if (!ft_strchr(str, map[y][x - 1]))
-		return (free(str), 0);
-	if (!ft_strchr(str, map[y][x + 1]))
-		return (free(str), 0);
+		return (0);
+	if (!char_checker(map[y][x - 1]))
+		return (0);
+	if (!char_checker(map[y][x + 1]))
+		return (0);
 	if (!map[y + 1])
-		return (free(str), 0);
+		return (0);
 	if (!map[y - 1])
-		return (free(str), 0);
-	if (!ft_strchr(str, map[y + 1][x]))
-		return (free(str), 0);
-	if (!ft_strchr(str, map[y - 1][x]))
-		return (free(str), 0);
-	free(str);
+		return (0);
+	if (!char_checker(map[y + 1][x]))
+		return (0);
+	if (!char_checker(map[y - 1][x]))
+		return (0);
 	return (1);
 }
 
@@ -694,17 +701,64 @@ int	start_parse(char *file_path, t_main_parse *parser_str)
 	reset_entity_count(parser_str);
 	fill_map(parser_str);
 	if (!check_extra_map_vertical(parser_str, 0))
+	{
+		free(parser_str->file_path);
+		free_double_pointer(parser_str->whole_file);
+		free(parser_str->no_texture_path);
+		free(parser_str->ea_texture_path);
+		free(parser_str->we_texture_path);
+		free(parser_str->so_texture_path);
+		free_double_pointer(parser_str->map);
 		return (0);
+	}
 	clean_newlines(parser_str->map, 0);
 	if (!invalid_component_check(parser_str))
+	{
+		free(parser_str->file_path);
+		free_double_pointer(parser_str->whole_file);
+		free(parser_str->no_texture_path);
+		free(parser_str->ea_texture_path);
+		free(parser_str->we_texture_path);
+		free(parser_str->so_texture_path);
+		free_double_pointer(parser_str->map);
 		return (0);
+	}
 	parser_str->cpy_sq_map = cpy_sq_map(parser_str->map, parser_str);
 	if (!parser_str->cpy_sq_map)
+	{
+		free(parser_str->file_path);
+		free_double_pointer(parser_str->whole_file);
+		free(parser_str->no_texture_path);
+		free(parser_str->ea_texture_path);
+		free(parser_str->we_texture_path);
+		free(parser_str->so_texture_path);
+		free_double_pointer(parser_str->map);
 		return (0);
+	}
 	if (!check_extra_horizontally(parser_str))
+	{
+		free(parser_str->file_path);
+		free_double_pointer(parser_str->whole_file);
+		free(parser_str->no_texture_path);
+		free(parser_str->ea_texture_path);
+		free(parser_str->we_texture_path);
+		free(parser_str->so_texture_path);
+		free_double_pointer(parser_str->map);
+		free_double_pointer(parser_str->cpy_sq_map);
 		return (0);
+	}
 	if (!blank_checker(parser_str->map))
+	{
+		free(parser_str->file_path);
+		free_double_pointer(parser_str->whole_file);
+		free(parser_str->no_texture_path);
+		free(parser_str->ea_texture_path);
+		free(parser_str->we_texture_path);
+		free(parser_str->so_texture_path);
+		free_double_pointer(parser_str->map);
+		free_double_pointer(parser_str->cpy_sq_map);
 		return (0);
+	}
 	return (1);
 
 

@@ -1,16 +1,17 @@
-NO      textures/11111.xpm
+NO      textures/1080x1080.xpm
 
 
 
-                          SO        asljcnasc.xpm
-  EA textures/resim1.xpm
-WE resim1.xpm
+                          SO        textures/1080x1080.xpm
+  EA textures/1080x1080.xpm
+WE textures/1080x1080.xpm
 
 C 12, 4    ,122      
 
   F               1,2,3
 
 1111
-1N01 
-1111
-
+1N1 1 
+11111
+11
+1

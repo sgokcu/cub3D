@@ -38,8 +38,8 @@ void	initialize_struct(t_main_parse *parse_struct)
 	parse_struct->f_red = 0;
 	parse_struct->f_green = 0;
 	parse_struct->f_blue = 0;
-	parse_struct->character.x = -1;
-	parse_struct->character.y = -1;
+	parse_struct->ch.p_loc.x = -1;
+	parse_struct->ch.p_loc.y = -1;
 	parse_struct->map_size.x = 0;
 	parse_struct->map_size.y = 0;
 	parse_struct->map_size.y = 0;
@@ -56,6 +56,16 @@ void	initialize_struct(t_main_parse *parse_struct)
 	parse_struct->we_texture_path = NULL;
 	parse_struct->file_path = NULL;
 	parse_struct->cpy_sq_map = NULL;
+	parse_struct->s_line = NULL;
+}
+
+void	ft_swap_int(int *a, int *b)
+{
+	if (a == b)
+		return ;
+	*a = *a ^ *b;
+	*b = *a ^ *b;
+	*a = *a ^ *b;
 }
 
 int file_name_checker(char *file_path, char *extension)
@@ -523,7 +533,7 @@ int	flf_check(char **map)
 
 int check_extra_horizontally(t_main_parse *parser)
 {
-	f_fill(parser, parser->character.y, parser->character.x);
+	f_fill(parser, parser->ch.p_loc.y, parser->ch.p_loc.x);
 	return (flf_check(parser->cpy_sq_map));
 }
 
@@ -584,10 +594,10 @@ int invalid_component_check(t_main_parse *parse)
 				return (0);
 			else if (f == 2)
 			{
-				if (parse->character.x != -1 && parse->character.y != -1)
+				if (parse->ch.p_loc.x != -1 && parse->ch.p_loc.y != -1)
 					return (0);
-				parse->character.x = j;
-				parse->character.y = i;
+				parse->ch.p_loc.x = j;
+				parse->ch.p_loc.y = i;
 			}
 			j++;
 		}
@@ -665,11 +675,23 @@ int blank_checker(char **map)
 	return (1);
 }
 
+void single_line(t_main_parse *parser)
+{
+	int i;
+
+	i = 0;
+
+	while (parser->cpy_sq_map[i])
+	{
+		parser->s_line = ft_strjoin(parser->s_line, parser->cpy_sq_map[i]);
+		i++;
+	}
+}
+
 int	start_parse(char *file_path, t_main_parse *parser_str)
 {
 	initialize_struct(parser_str);
 	int fd;
-
 	if (!file_name_checker(file_path, ".cub"))
 		return (0);
 	parser_str->file_path = ft_strdup(file_path);
@@ -735,6 +757,7 @@ int	start_parse(char *file_path, t_main_parse *parser_str)
 		free_double_pointer(parser_str->map);
 		return (0);
 	}
+	single_line(parser_str);
 	if (!check_extra_horizontally(parser_str))
 	{
 		free(parser_str->file_path);
@@ -759,18 +782,5 @@ int	start_parse(char *file_path, t_main_parse *parser_str)
 		free_double_pointer(parser_str->cpy_sq_map);
 		return (0);
 	}
-	return (1);
-
-
-	// ft_putendl_fd(parser_str.no_texture_path, 1);
-	// ft_putendl_fd(parser_str.ea_texture_path, 1);
-	// ft_putendl_fd(parser_str.we_texture_path, 1);
-	// ft_putendl_fd(parser_str.so_texture_path, 1);
-	// printf("F_red: %d\n", parser_str.f_red);
-	// printf("F_green: %d\n", parser_str.f_green);
-	// printf("F_blue: %d\n", parser_str.f_blue);
-	// printf("C_red: %d\n", parser_str.c_red);
-	// printf("C_green: %d\n", parser_str.c_green);
-	// printf("C_blue: %d\n", parser_str.c_blue);
 	return (1);
 }

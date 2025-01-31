@@ -19,7 +19,9 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*allocated;
 	size_t	i;
 	size_t	y;
-
+	
+	if (!s1)
+		return (ft_strdup(s2));
 	i = 0;
 	y = 0;
 	ss1 = (char *)s1;

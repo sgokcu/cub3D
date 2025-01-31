@@ -104,7 +104,8 @@ char **cpy_sq_map(char **map, t_main_parse *parser)
 	}
 	fill_index(y, parser, sq_map);
 	sq_map[y + 1] = NULL;
-	parser->map_size.y = y;
+	parser->map_size.y = y + 1;
+	parser->map_size.x += 2;
 	return (sq_map);
 }
 

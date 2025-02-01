@@ -51,9 +51,8 @@ int	fill_whole_file(t_main_parse *parse_struct, int fd)
 		free(parse_struct->file_path);
 		return (0);
 	}
-	// printf("line count : %d\n", line_count);
 	while (++i < line_count)
-		parse_struct->whole_file[i] = get_next_line(fd); // geldi
+		parse_struct->whole_file[i] = get_next_line(fd);
 	parse_struct->whole_file[i] = NULL;
 	close(fd);
 	return (1);
@@ -109,28 +108,6 @@ char **cpy_sq_map(char **map, t_main_parse *parser)
 	return (sq_map);
 }
 
-int	fill_map(t_main_parse *parse)
-{
-	int i;
-	int map_start;
-
-	i = 0;
-	pass_attributes(parse, NULL, &i);
-	pass_blank(parse, NULL, &i);
-	map_start = i;
-	go_eof(parse, &i);
-	parse->map = malloc(sizeof(char *) * (i - map_start + 1));
-	i = 0;
-	while (parse->whole_file[map_start])
-	{
-		parse->map[i] = ft_strdup(parse->whole_file[map_start]);
-		map_start++;
-		i++;
-	}
-	parse->map[i] = NULL;
-	parse->map_size.y = i;
-	return (1);
-}
 
 char **strdup_double(char **str)
 {

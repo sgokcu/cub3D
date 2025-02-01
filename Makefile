@@ -17,7 +17,7 @@ OBJ = $(SRCS:.c=.o)
 	 $(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	# make -C mlx
+	make -C mlx
 	make -C libft
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_FLAGS_MAC) -o $(NAME)
 

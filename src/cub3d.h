@@ -2,15 +2,17 @@
 #define CUB3D
 
 #include <fcntl.h>
+#include <math.h>
 #include <stdio.h>
 #include "../mlx/mlx.h"
 #include "../libft/libft.h"
 #include "../get_next_line/get_next_line.h"
 
-#define CHAR '*'
+#define CHAR ' '
 # define PI		3.14159265358979323846
 # define EPSILON	1e-3
 # define MAX_RAY_LENGHT	100
+# define PLAYER_SIZE	0.2
 #  include <X11/keysym.h>
 #  define ESC_KEY XK_Escape
 #  define X_KEY XK_x
@@ -203,8 +205,14 @@ typedef struct s_input
 	t_bool	esc_key;
 }	t_input;
 
+typedef enum s_enums{
+	HEIGHT = 800,
+	WIDTH  = 800,
+}	t_enums;
+
 typedef struct s_cub3D
 {
+	t_hit		collisions[WIDTH];
 	float		coll_deg[WIDTH];
 	t_input inputs;
 	t_mlx mlx;
@@ -221,10 +229,6 @@ typedef struct s_cub3D
 	
 } t_cub3D;
 
-typedef enum s_enums{
-	HEIGHT = 800,
-	WIDTH  = 800,
-}	t_enums;
 
 int start_parse(char* file_path, t_main_parse *parser_str);
 char **strdup_double(char **str);
@@ -248,7 +252,14 @@ renk kodları ayrı ayrı (RGB)-
 
 */
 
-
+struct s_draw_hlpr
+{
+	t_cub3D	*cub3d;
+	t_img	*tex;
+	float	line_height;
+	float	tex_x;
+	int		index;
+};
 
 
 static const t_vec2	g_south = (t_vec2){.x = 0, .y = 1};

@@ -12,6 +12,16 @@
 
 #include "cub3d.h"
 
+float	ft_deg_to_rad(float deg)
+{
+	return ((deg / 180) * PI);
+}
+
+float	ft_rad_to_deg(float rad)
+{
+	return (rad * (180 / PI));
+}
+
 void init_map(t_cub3D *cub3d)
 {
 	cub3d->map.size.x = cub3d->p->map_size.x;
@@ -123,7 +133,7 @@ static void	init_tex(t_cub3D *cub3d, t_img *tex, char *path)
 
 void init_all(t_cub3D *cub3d, t_main_parse *parser)
 {
-	cub3d->p = &parser;
+	cub3d->p = parser;
 	cub3d->inputs = (t_input){0};
 	cub3d->mlx.mlx = mlx_init();
 	cub3d->floor.blue = parser->f_blue;
@@ -133,17 +143,26 @@ void init_all(t_cub3D *cub3d, t_main_parse *parser)
 	cub3d->ceiling.red = parser->c_red;
 	cub3d->ceiling.green = parser->c_green;
 	// INIT TEX //
-	init_tex(&cub3d, &cub3d->tex_west, parser->we_texture_path);
-	init_tex(&cub3d, &cub3d->tex_west, parser->ea_texture_path);
-	init_tex(&cub3d, &cub3d->tex_west, parser->so_texture_path);
-	init_tex(&cub3d, &cub3d->tex_west, parser->no_texture_path);
+	init_tex(cub3d, &cub3d->tex_west, parser->we_texture_path);
+	init_tex(cub3d, &cub3d->tex_west, parser->ea_texture_path);
+	init_tex(cub3d, &cub3d->tex_west, parser->so_texture_path);
+	init_tex(cub3d, &cub3d->tex_west, parser->no_texture_path);
 	// INIT TEX //
 	mirror_tex(&cub3d->tex_north);
 	mirror_tex(&cub3d->tex_east);
-	init_win(&cub3d);
-	init_player(&cub3d);
+	init_win(cub3d);
+	init_player(cub3d);
 	mlx_put_image_to_window(cub3d->mlx.mlx, cub3d->mlx.win.win, cub3d->mlx.img.img, 0, 0);
 	mlx_do_key_autorepeatoff(cub3d->mlx.mlx);
+}
+
+int	ft_exit(void *cub3d)
+{
+	t_cub3D	*game;
+
+	game = (t_cub3D *)cub3d;
+	mlx_destroy_window(game->mlx.mlx, game->mlx.win.win); //free modifiye et
+	exit(EXIT_SUCCESS);
 }
 
 int	arrange_key_press(int keycode, t_cub3D *cub3d)
@@ -182,14 +201,6 @@ int	arrange_key_release(int keycode, t_cub3D *cub3d)
 	return (0);
 }
 
-int	ft_exit(void *cub3d)
-{
-	t_cub3D	*game;
-
-	game = (t_cub3D *)cub3d;
-	mlx_destroy_window(game->mlx.mlx, game->mlx.win.win); //free modifiye et
-	exit(EXIT_SUCCESS);
-}
 t_vec2	ft_vec2_div(t_vec2 vec, float div)
 {
 	t_vec2	vec_res;
@@ -236,6 +247,34 @@ t_vec2	ft_vec2_add(t_vec2 vec1, t_vec2 vec2)
 	return (vec_res);
 }
 
+void	player_collision(t_cub3D *cub3d, t_vec2 next_pos)
+{
+	if (next_pos.x > cub3d->player.pos.x)//x+ yönünde haraket ettiyse.
+	{
+		if (cub3d->map.tiles[(int)(next_pos.x + PLAYER_SIZE) + ((int)cub3d->player.pos.y * cub3d->map.size.x)] != '1')
+		//mapi tek satır olarak aldığımız için şu an olduğumuz yeri y ile xi çarparak buluyoruz ve duvara eşit değilse ilerliyoruz.
+			cub3d->player.pos.x = next_pos.x;
+	}
+	else
+	{
+		if (cub3d->map.tiles[(int)(next_pos.x - PLAYER_SIZE)
+			+ ((int)cub3d->player.pos.y * cub3d->map.size.x)] != '1')
+			cub3d->player.pos.x = next_pos.x;
+	}
+	if (next_pos.y > cub3d->player.pos.y)
+	{
+		if (cub3d->map.tiles[(int)cub3d->player.pos.x
+				+ ((int)(next_pos.y + PLAYER_SIZE) *cub3d->map.size.x)] != '1')
+			cub3d->player.pos.y = next_pos.y;
+	}
+	else
+	{
+		if (cub3d->map.tiles[(int)cub3d->player.pos.x
+				+ ((int)(next_pos.y - PLAYER_SIZE) *cub3d->map.size.x)] != '1')
+			cub3d->player.pos.y = next_pos.y;
+	}
+}
+
 void	player_movement(t_cub3D *cub3d, t_vec2 dir)
 {
 	t_vec2		next_pos;
@@ -250,15 +289,7 @@ void	rotate_camera(t_cub3D *cub3d, t_bool rotate_dir)
 	cub3d->player.dir = ft_vec2_rot(cub3d->player.dir, cub3d->player.camera_speed * rotate_dir);
 }
 
-float	ft_deg_to_rad(float deg)
-{
-	return ((deg / 180) * PI);
-}
 
-float	ft_rad_to_deg(float rad)
-{
-	return (rad * (180 / PI));
-}
 
 void	player_modify(t_cub3D *cub3d)
 {
@@ -336,6 +367,43 @@ static t_vec2	hit_vert(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
 	return (g_vec2_null);
 }
 
+static void	hori_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir)
+{
+	if (dir.y < 0)
+	{
+		ray->y = (int)start.y;
+		ray->step = -1;
+		ray->offset = -1;
+	}
+	else
+	{
+		ray->y = (int)start.y + 1;
+		ray->step = 1;
+		ray->offset = 0;
+	}
+}
+
+static t_vec2	hit_hori(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
+{
+	t_raycast	ray;
+
+	hori_hit_regulator(&ray, start, dir);
+	while (ray.y > 0 && ray.y < cub3d->map.size.y)
+	{
+		ray.x = ((dir.x / dir.y) * (ray.y - start.y)) + start.x;
+		ray.hit.pos = (t_vec2){.x = ray.x, .y = ray.y};
+		*dist = ft_vec2_magnitude(ft_vec2_sub(ray.hit.pos, start));
+		if (*dist >= MAX_RAY_LENGHT)
+			break ;
+		if (ray.x > 0 && ray.x < cub3d->map.size.x)
+			if (cub3d->map.tiles[(int)(ray.x) + (((int)ray.y + ray.offset)
+					* cub3d->map.size.x)] == '1')
+				return (ray.hit.pos);
+		ray.y += ray.step;
+	}
+	return (g_vec2_null);
+}
+
 void	raycast(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, t_hit *out)
 {
 	t_vec2	vert;
@@ -383,6 +451,147 @@ static void	ray_modify(t_cub3D *cub3d)
 	}
 }
 
+void	ft_put_pixel(t_img *img, int x, int y, t_color color)
+{
+	img->data[x + (img->size_line * y)] = color;//tam şu an olduğumuz noktaya ulaşmamızı ve o pixeli boyamamızı sağlar.
+}
+
+void	ceiling_floor_drawing(t_cub3D *cub3d)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i >= 0 && i < WIDTH)//en soldan başlayarak sağa doğru dikey olacak şekilde yukardan aşağı doğru piksel koyuyoruz.
+	{
+		j = 0;
+		while (j >= 0 && j < HEIGHT)
+		{
+			if (j <= HEIGHT / 2)
+				ft_put_pixel(&cub3d->mlx.img, i, j, cub3d->ceiling);
+			else
+				ft_put_pixel(&cub3d->mlx.img, i, j, cub3d->floor);
+			j++;
+		}
+		i++;
+	}
+}
+
+t_bool	ft_vec2_equ(t_vec2 vec1, t_vec2 vec2)
+{
+	if (fabs(vec1.x) - fabs(vec2.x) < EPSILON
+		&& fabs(vec1.y) - fabs(vec2.y) < EPSILON)
+		return (true);
+	return (false);
+}
+
+float	ft_vec2_dist(t_vec2 point1, t_vec2 point2)
+{
+	float	dist_x;
+	float	dist_y;
+
+	dist_x = fabs(point1.x - point2.x);
+	dist_y = fabs(point1.y - point2.y);
+	return (sqrtf(powf(dist_x, 2) + powf(dist_y, 2)));
+}
+
+float	ft_lerp(float val, float min, float max)
+{
+	return ((val * (max - min)) + min);//0-1 arasındaki değerleri ekrana çizdirmek için uygun hale getiririz mesela 0-800.
+}
+
+float	ft_normalize(float val, float min, float max)
+{
+	if (max == min)
+		return (1);
+	return ((val - min) / (max - min));//0-1 arasına getirir gelen değeri.
+}
+
+float	get_tex_y(t_img *tex, float i, float height)
+{
+	return (ft_lerp(ft_normalize(i, 0, height), 0, tex->size_line));
+	//benim line'ım 0-400 arasıysa onu onu 0-1 arasına alıyorum ki texture'ım 0-800 arasında olduğunda doğru şekilde nereye denk geliyo anlayıp çizdiriyim.
+}
+
+t_color	*get_tex_data(t_img *tex, float tex_x)
+{
+	return (tex->data + ((int)ft_lerp(tex_x, 0, tex->size_line) * tex->size_line));
+	//işlem yapacağımız dikey satırı döndürür.
+}
+
+static void	draw_face(struct s_draw_hlpr drw)
+{
+	int		i;
+	float	tex_y;
+	float	full_height;
+	t_color	*data;
+
+	data = get_tex_data(drw.tex, drw.tex_x);
+	i = 0;
+	tex_y = 0;
+	full_height = drw.line_height;
+	if (drw.line_height > HEIGHT)
+		drw.line_height = HEIGHT;
+	while (i < drw.line_height)
+	{
+		if (full_height > HEIGHT)
+			tex_y = get_tex_y(drw.tex, i + ((full_height - HEIGHT) / 2), full_height);
+		else
+			tex_y = get_tex_y(drw.tex, i, drw.line_height);
+		if (tex_y >= drw.tex->size_line)
+			tex_y = drw.tex->size_line - 1;//taştığı kısımı almasın diye bir azaltıyoruz.
+		ft_put_pixel(&drw.cub3d->mlx.img, drw.index, i + (HEIGHT - drw.line_height) / 2, data[(int)tex_y]);//aslında yukarıda ne kadar mesafe bırakacağımıza bakıyoruz ikiye bölüyoruz ki hem altta hem üstte eşit boşuk olsun ekranı ortalasın.
+		i++;
+	}
+}
+
+static void	draw_wall_piece(t_cub3D *cub3d, float line_height, int index, t_face face)
+{
+	float	pos_x;
+	float	pos_y;
+
+	pos_x = cub3d->collisions[index].pos.x;
+	pos_y = cub3d->collisions[index].pos.y;
+	if (face == south)
+		draw_face((struct s_draw_hlpr){.cub3d = cub3d, .tex = &cub3d->tex_south,
+			.line_height = line_height, .index = index,
+			.tex_x = pos_x - (int)pos_x});
+	if (face == west)
+		draw_face((struct s_draw_hlpr){.cub3d = cub3d, .tex = &cub3d->tex_west,
+			.line_height = line_height, .index = index,
+			.tex_x = pos_y - (int)pos_y});//kuzey ve güneyde yatay yani xe bakarız doğu ve batıda dikey yani ylere bakarız.
+	if (face == north)
+		draw_face((struct s_draw_hlpr){.cub3d = cub3d, .tex = &cub3d->tex_north,
+			.line_height = line_height, .index = index,
+			.tex_x = pos_x - (int)pos_x});
+	if (face == east)
+		draw_face((struct s_draw_hlpr){.cub3d = cub3d, .tex = &cub3d->tex_east,
+			.line_height = line_height, .index = index,
+			.tex_x = pos_y - (int)pos_y});//ışının çarptığı yeri çizdirmek için 0 ve 1 arasındaki (textteki pikselin tam o noktasının şeridini çizer).
+}
+
+void	wall_drawing(t_cub3D *cub3d)
+{
+	float	line_height;
+	float	ray_len;
+	int		i;
+
+	i = 0;
+	while (i < HEIGHT)
+	{
+		if (ft_vec2_equ(cub3d->collisions[i].pos, g_vec2_null))
+		//bir yere çarpıp çarpmadığımızı kontrol ediyoruz (float 0 değerini döndürmüyor genellikle o yüzden hata payıyla yani epsilonla kontrol ediyoruz).
+		{
+			i++;
+			continue ;
+		}
+		ray_len = ft_vec2_dist(cub3d->collisions[i].pos, cub3d->player.pos);//duvar ve oyuncumuz arasındaki meesafeyi buluyoruz.
+		line_height = HEIGHT / (ray_len * cos(ft_deg_to_rad(cub3d->coll_deg[i])));//balık gözünü engellemek için yapıyoruz cos yazarak dik açı gibi oluyo.
+		draw_wall_piece(cub3d, line_height, i, cub3d->collisions[i].face);
+		i++;
+	}
+}
+
 int	modify(void *param)
 {
 	t_cub3D  *cub3d;
@@ -415,6 +624,7 @@ void cub3d(char **av)
 		Destroy, (1 << 17), ft_exit, &cub3d);
 	mlx_loop_hook(cub3d.mlx.mlx, modify, &cub3d);
 	mlx_loop(cub3d.mlx.mlx);
+	printf("selam\n");
 
 	free(parser.file_path);
 	free_double_pointer(parser.whole_file);

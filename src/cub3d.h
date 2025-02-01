@@ -111,10 +111,6 @@ typedef struct s_location
 	int y;
 } t_location;
 
-typedef struct s_character{
-	t_location p_loc;
-	char direction;
-} t_character;
 
 typedef enum e_face
 {
@@ -123,6 +119,11 @@ typedef enum e_face
 	south,
 	east
 }	t_face;
+
+typedef struct s_character{
+	t_location p_loc;
+	char direction;
+} t_character;
 
 typedef struct s_hit
 {

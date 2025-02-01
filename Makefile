@@ -4,7 +4,7 @@ NAME = cub3D
 LIBFT = libft/libft.a
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra #-g -fsanitize=address
 
 
 MLX_FLAGS_MAC = -Lmlx -lmlx -lXext -lX11 -lm

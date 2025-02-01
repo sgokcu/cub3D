@@ -596,6 +596,7 @@ int invalid_component_check(t_main_parse *parse)
 			{
 				if (parse->ch.p_loc.x != -1 && parse->ch.p_loc.y != -1)
 					return (0);
+				parse->ch.direction = parse->map[i][j];
 				parse->ch.p_loc.x = j;
 				parse->ch.p_loc.y = i;
 			}

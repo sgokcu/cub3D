@@ -251,25 +251,25 @@ void	player_collision(t_cub3D *cub3d, t_vec2 next_pos)
 {
 	if (next_pos.x > cub3d->player.pos.x)//x+ yönünde haraket ettiyse.
 	{
-		if (cub3d->map.tiles[(int)(next_pos.x + PLAYER_SIZE) + ((int)cub3d->player.pos.y * cub3d->map.size.x)] != '1')
+		if (cub3d->p->s_line[(int)(next_pos.x + PLAYER_SIZE) + ((int)cub3d->player.pos.y * cub3d->map.size.x)] != '1')
 		//mapi tek satır olarak aldığımız için şu an olduğumuz yeri y ile xi çarparak buluyoruz ve duvara eşit değilse ilerliyoruz.
 			cub3d->player.pos.x = next_pos.x;
 	}
 	else
 	{
-		if (cub3d->map.tiles[(int)(next_pos.x - PLAYER_SIZE)
+		if (cub3d->p->s_line[(int)(next_pos.x - PLAYER_SIZE)
 			+ ((int)cub3d->player.pos.y * cub3d->map.size.x)] != '1')
 			cub3d->player.pos.x = next_pos.x;
 	}
 	if (next_pos.y > cub3d->player.pos.y)
 	{
-		if (cub3d->map.tiles[(int)cub3d->player.pos.x
+		if (cub3d->p->s_line[(int)cub3d->player.pos.x
 				+ ((int)(next_pos.y + PLAYER_SIZE) *cub3d->map.size.x)] != '1')
 			cub3d->player.pos.y = next_pos.y;
 	}
 	else
 	{
-		if (cub3d->map.tiles[(int)cub3d->player.pos.x
+		if (cub3d->p->s_line[(int)cub3d->player.pos.x
 				+ ((int)(next_pos.y - PLAYER_SIZE) *cub3d->map.size.x)] != '1')
 			cub3d->player.pos.y = next_pos.y;
 	}
@@ -299,6 +299,7 @@ void	player_modify(t_cub3D *cub3d)
 
 	inputs = cub3d->inputs;
 	move_dir = (t_vec2){.x = inputs.a_key + inputs.d_key, .y = inputs.w_key + inputs.s_key};
+
 	 //ikisine aynı anda basılırsa hangi tarafa ne kadar gideceğini belirlemek için.
 	move_dir = ft_vec2_norm(move_dir); //gideceğimiz yerle aramızda ne kadar uzunluk olduğunu buluyoruz ve 
 	//bunu normalize edip 0-1 arasında tutuyoruz.
@@ -359,10 +360,23 @@ static t_vec2	hit_vert(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
 		if (*dist >= MAX_RAY_LENGHT)
 			break ;
 		if (ray.y >= 0 && ray.y < cub3d->map.size.y)
-			if (cub3d->map.tiles[(int)(ray.x + ray.offset) + ((int)ray.y * cub3d->map.size.x)] == '1')
-			//çarptığımız noktanın duvar olup olmadığını kontrol eder ve duvarsa çarpma konumunu döndürür.
+		{
+			printf("ray.x: %f\n", ray.x);
+			printf("ray.offset; %d\n", ray.offset);
+			printf("ray.y; %f\n", ray.y);
+			printf("mapsize x; %d\n", cub3d->map.size.x);
+			printf("sayi: %d\n", ((int)(ray.x + ray.offset) + ((int)ray.y * cub3d->map.size.x)));
+			if (cub3d->p->s_line[(int)(ray.x + ray.offset) + ((int)ray.y * cub3d->map.size.x)] == '1')
 				return (ray.hit.pos);
+			//çarptığımız noktanın duvar olup olmadığını kontrol eder ve duvarsa çarpma konumunu döndürür.
+			printf("ray.x: %f\n", ray.x);
+			printf("ray.offset; %d\n", ray.offset);
+			printf("ray.y; %f\n", ray.y);
+			printf("mapsize x; %d\n", cub3d->map.size.x);
+			printf("sayi: %d\n", ((int)(ray.x + ray.offset) + ((int)ray.y * cub3d->map.size.x)));
+		}
 		ray.x += ray.step;
+		printf("xxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 	return (g_vec2_null);
 }
@@ -396,7 +410,7 @@ static t_vec2	hit_hori(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
 		if (*dist >= MAX_RAY_LENGHT)
 			break ;
 		if (ray.x > 0 && ray.x < cub3d->map.size.x)
-			if (cub3d->map.tiles[(int)(ray.x) + (((int)ray.y + ray.offset)
+			if (cub3d->p->s_line[(int)(ray.x) + (((int)ray.y + ray.offset)
 					* cub3d->map.size.x)] == '1')
 				return (ray.hit.pos);
 		ray.y += ray.step;
@@ -442,6 +456,7 @@ static void	ray_modify(t_cub3D *cub3d)
 	deg_step = -(WIDTH / 2);//soldan sağa doğru bakması için yapıyoruz.
 	while (i < WIDTH)
 	{
+		printf("i: %d\n", i);
 		cub3d->coll_deg[i] = ft_rad_to_deg(atan(deg_step / WIDTH));
 		//şu an olduğu yerin radyan cinsinden karşılığını verir daha sonra raycastte o çizgideki çarptığı yer var mı diye bakar.
 		raycast(cub3d, cub3d->player.pos, ft_vec2_rot(cub3d->player.dir, cub3d->coll_deg[i]), &cub3d->collisions[i]);
@@ -579,6 +594,7 @@ void	wall_drawing(t_cub3D *cub3d)
 	i = 0;
 	while (i < HEIGHT)
 	{
+
 		if (ft_vec2_equ(cub3d->collisions[i].pos, g_vec2_null))
 		//bir yere çarpıp çarpmadığımızı kontrol ediyoruz (float 0 değerini döndürmüyor genellikle o yüzden hata payıyla yani epsilonla kontrol ediyoruz).
 		{
@@ -597,12 +613,15 @@ int	modify(void *param)
 	t_cub3D  *cub3d;
 
 	cub3d = (t_cub3D *)param;
+	printf("selam1\n");
 	player_modify(cub3d);
+	printf("selam2\n");
 	ray_modify(cub3d);
 	ceiling_floor_drawing(cub3d);
 	wall_drawing(cub3d);
 	mlx_put_image_to_window(cub3d->mlx.mlx, cub3d->mlx.win.win,
 		cub3d->mlx.img.img, 0, 0);
+	printf("selam6\n");	
 	return (0);
 }
 
@@ -615,7 +634,20 @@ void cub3d(char **av)
 		ft_putstr_fd("Parse Error\n", 2);
 		exit(0);
 	}
+	//SELAM
 	init_all(&cub3d, &parser);
+	if (parser.ch.direction == 'N')
+		cub3d.collisions->face = north;
+	else if (parser.ch.direction == 'S')
+		cub3d.collisions->face = south;
+	else if (parser.ch.direction == 'E')
+		cub3d.collisions->face = east;
+	else if (parser.ch.direction == 'W')
+		cub3d.collisions->face = west;
+	cub3d.map.size.x = cub3d.p->map_size.x;
+	cub3d.map.size.y = cub3d.p->map_size.y;
+
+	//SELAM
 	mlx_hook(cub3d.mlx.win.win, \
 		KeyPress, (1 << 0), arrange_key_press, &cub3d);
 	mlx_hook(cub3d.mlx.win.win, \
@@ -624,8 +656,6 @@ void cub3d(char **av)
 		Destroy, (1 << 17), ft_exit, &cub3d);
 	mlx_loop_hook(cub3d.mlx.mlx, modify, &cub3d);
 	mlx_loop(cub3d.mlx.mlx);
-	printf("selam\n");
-
 	free(parser.file_path);
 	free_double_pointer(parser.whole_file);
 	free(parser.no_texture_path);

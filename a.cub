@@ -1,15 +1,17 @@
-NO      textures/1080x1080.xpm
+NO      textures/BrickGrey.xpm
 
 
 
-                          SO        textures/1080x1080.xpm
-  EA textures/1080x1080.xpm
-WE textures/1080x1080.xpm
+                          SO        textures/BrickGrey.xpm
+  EA textures/BrickGrey.xpm
+WE textures/BrickGrey.xpm
 
 C 12, 4    ,122      
 
   F               1,2,3
 
 111111
-100N11
+100N01
+100001
+100001
 111111

@@ -36,8 +36,8 @@ void init_map(t_cub3D *cub3d)
 
 static void	init_player(t_cub3D *cub3d)
 {
-	cub3d->player.pos.x = (float)cub3d->p->ch.p_loc.x + 0.5;
-	cub3d->player.pos.y = (float)cub3d->p->ch.p_loc.y + 0.5;
+	cub3d->player.pos.x = (float)cub3d->p->ch.p_loc.x + 1.5;
+	cub3d->player.pos.y = (float)cub3d->p->ch.p_loc.y + 1.5;
 	if (cub3d->p->ch.direction == 'S')
 		cub3d->player.dir = g_south;
 	if (cub3d->p->ch.direction == 'N')
@@ -144,9 +144,9 @@ void init_all(t_cub3D *cub3d, t_main_parse *parser)
 	cub3d->ceiling.green = parser->c_green;
 	// INIT TEX //
 	init_tex(cub3d, &cub3d->tex_west, parser->we_texture_path);
-	init_tex(cub3d, &cub3d->tex_west, parser->ea_texture_path);
-	init_tex(cub3d, &cub3d->tex_west, parser->so_texture_path);
-	init_tex(cub3d, &cub3d->tex_west, parser->no_texture_path);
+	init_tex(cub3d, &cub3d->tex_east, parser->ea_texture_path);
+	init_tex(cub3d, &cub3d->tex_south, parser->so_texture_path);
+	init_tex(cub3d, &cub3d->tex_north, parser->no_texture_path);
 	// INIT TEX //
 	mirror_tex(&cub3d->tex_north);
 	mirror_tex(&cub3d->tex_east);
@@ -361,22 +361,11 @@ static t_vec2	hit_vert(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
 			break ;
 		if (ray.y >= 0 && ray.y < cub3d->map.size.y)
 		{
-			printf("ray.x: %f\n", ray.x);
-			printf("ray.offset; %d\n", ray.offset);
-			printf("ray.y; %f\n", ray.y);
-			printf("mapsize x; %d\n", cub3d->map.size.x);
-			printf("sayi: %d\n", ((int)(ray.x + ray.offset) + ((int)ray.y * cub3d->map.size.x)));
 			if (cub3d->p->s_line[(int)(ray.x + ray.offset) + ((int)ray.y * cub3d->map.size.x)] == '1')
 				return (ray.hit.pos);
 			//çarptığımız noktanın duvar olup olmadığını kontrol eder ve duvarsa çarpma konumunu döndürür.
-			printf("ray.x: %f\n", ray.x);
-			printf("ray.offset; %d\n", ray.offset);
-			printf("ray.y; %f\n", ray.y);
-			printf("mapsize x; %d\n", cub3d->map.size.x);
-			printf("sayi: %d\n", ((int)(ray.x + ray.offset) + ((int)ray.y * cub3d->map.size.x)));
 		}
 		ray.x += ray.step;
-		printf("xxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 	return (g_vec2_null);
 }
@@ -456,7 +445,6 @@ static void	ray_modify(t_cub3D *cub3d)
 	deg_step = -(WIDTH / 2);//soldan sağa doğru bakması için yapıyoruz.
 	while (i < WIDTH)
 	{
-		printf("i: %d\n", i);
 		cub3d->coll_deg[i] = ft_rad_to_deg(atan(deg_step / WIDTH));
 		//şu an olduğu yerin radyan cinsinden karşılığını verir daha sonra raycastte o çizgideki çarptığı yer var mı diye bakar.
 		raycast(cub3d, cub3d->player.pos, ft_vec2_rot(cub3d->player.dir, cub3d->coll_deg[i]), &cub3d->collisions[i]);
@@ -613,15 +601,12 @@ int	modify(void *param)
 	t_cub3D  *cub3d;
 
 	cub3d = (t_cub3D *)param;
-	printf("selam1\n");
 	player_modify(cub3d);
-	printf("selam2\n");
 	ray_modify(cub3d);
 	ceiling_floor_drawing(cub3d);
 	wall_drawing(cub3d);
 	mlx_put_image_to_window(cub3d->mlx.mlx, cub3d->mlx.win.win,
 		cub3d->mlx.img.img, 0, 0);
-	printf("selam6\n");	
 	return (0);
 }
 
@@ -646,6 +631,7 @@ void cub3d(char **av)
 		cub3d.collisions->face = west;
 	cub3d.map.size.x = cub3d.p->map_size.x;
 	cub3d.map.size.y = cub3d.p->map_size.y;
+
 
 	//SELAM
 	mlx_hook(cub3d.mlx.win.win, \

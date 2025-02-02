@@ -17,6 +17,15 @@ float	ft_deg_to_rad(float deg)
 	return ((deg / 180) * PI);
 }
 
+void	ft_swap_int(int *a, int *b)
+{
+	if (a == b)
+		return ;
+	*a = *a ^ *b;
+	*b = *a ^ *b;
+	*a = *a ^ *b;
+}
+
 float	ft_rad_to_deg(float rad)
 {
 	return (rad * (180 / PI));

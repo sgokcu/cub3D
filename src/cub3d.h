@@ -230,6 +230,14 @@ typedef struct s_cub3D
 	
 } t_cub3D;
 
+struct s_draw_hlpr
+{
+	t_cub3D	*cub3d;
+	t_img	*tex;
+	float	line_height;
+	float	tex_x;
+	int		index;
+};
 
 int start_parse(char* file_path, t_main_parse *parser_str);
 char **strdup_double(char **str);
@@ -288,7 +296,53 @@ void copy_loop(char **sq, int y, int *i, char **map);
 void allocate_enough(t_main_parse *p, char **map, int max_y, char ***sq);
 int	y_func(char **map, int *max_y);
 
+
 void	ft_swap_int(int *a, int *b);
+float	ft_rad_to_deg(float rad);
+void	init_map(t_cub3D *cub3d);
+static void	init_player(t_cub3D *cub3d);
+float	ft_deg_to_rad(float deg);
+void	init_win(t_cub3D *cub3d);
+void	mirror_tex(t_img *tex);
+void	rotate_index(t_img *tex);
+static void	init_tex(t_cub3D *cub3d, t_img *tex, char *path);
+void init_all(t_cub3D *cub3d, t_main_parse *parser);
+int	ft_exit(void *cub3d);
+int	arrange_key_press(int keycode, t_cub3D *cub3d);
+int	arrange_key_release(int keycode, t_cub3D *cub3d);
+t_vec2	ft_vec2_div(t_vec2 vec, float div);
+t_vec2	ft_vec2_norm(t_vec2 vec);
+t_vec2	ft_vec2_rot(t_vec2 vec, float deg);
+t_vec2	ft_vec2_mul(t_vec2 vec, float mul);
+t_vec2	ft_vec2_add(t_vec2 vec1, t_vec2 vec2);
+void	player_collision(t_cub3D *cub3d, t_vec2 next_pos);
+void	player_movement(t_cub3D *cub3d, t_vec2 dir);
+void	rotate_camera(t_cub3D *cub3d, t_bool rotate_dir);
+void	player_modify(t_cub3D *cub3d);
+static void	vert_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir);
+float	ft_vec2_magnitude(t_vec2 vec);
+t_vec2	ft_vec2_sub(t_vec2	vec1, t_vec2 vec2);
+static t_vec2	hit_vert(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist);
+static void	hori_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir);
+static t_vec2	hit_hori(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist);
+void	raycast(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, t_hit *out);
+static void	ray_modify(t_cub3D *cub3d);
+void	ft_put_pixel(t_img *img, int x, int y, t_color color);
+void	ceiling_floor_drawing(t_cub3D *cub3d);
+t_bool	ft_vec2_equ(t_vec2 vec1, t_vec2 vec2);
+float	ft_vec2_dist(t_vec2 point1, t_vec2 point2);
+float	ft_lerp(float val, float min, float max);
+float	ft_normalize(float val, float min, float max);
+float	get_tex_y(t_img *tex, float i, float height);
+t_color	*get_tex_data(t_img *tex, float tex_x);
+static void	draw_face(struct s_draw_hlpr drw);
+static void	draw_wall_piece(t_cub3D *cub3d, float line_height, int index, t_face face);
+float	ft_normalize(float val, float min, float max);
+float	get_tex_y(t_img *tex, float i, float height);
+t_color	*get_tex_data(t_img *tex, float tex_x);
+static void	draw_face(struct s_draw_hlpr drw);
+static void	draw_wall_piece(t_cub3D *cub3d, float lh, int index, t_face face);
+void	free_all(t_main_parse *parser);
 /*
 
 west east south north görüntülerinin dosya yolları, sayısı 1 tane olabilir-
@@ -297,15 +351,6 @@ renk kodları ayrı ayrı (RGB)-
 
 
 */
-
-struct s_draw_hlpr
-{
-	t_cub3D	*cub3d;
-	t_img	*tex;
-	float	line_height;
-	float	tex_x;
-	int		index;
-};
 
 
 static const t_vec2	g_south = (t_vec2){.x = 0, .y = 1};

@@ -12,7 +12,7 @@
 
 #include "../cub3d.h"
 
-void reset_entity_count(t_main_parse *parse)
+void	reset_entity_count(t_main_parse *parse)
 {
 	parse->entity_counts.EA_count = 0;
 	parse->entity_counts.WE_count = 0;
@@ -22,10 +22,9 @@ void reset_entity_count(t_main_parse *parse)
 	parse->entity_counts.C_count = 0;
 }
 
-
-void clean_newlines(char **map, int i)
+void	clean_newlines(char **map, int i)
 {
-	char *temp;
+	char	*temp;
 
 	while (map[i])
 	{
@@ -55,7 +54,7 @@ void	f_fill(t_main_parse *prs, int y, int x)
 int	flf_check(char **map)
 {
 	int	y;
-	int x;
+	int	x;
 
 	y = 0;
 	while (map[y])
@@ -72,7 +71,7 @@ int	flf_check(char **map)
 	return (1);
 }
 
-int check_extra_horizontally(t_main_parse *parser)
+int	check_extra_horizontally(t_main_parse *parser)
 {
 	f_fill(parser, parser->ch.p_loc.y, parser->ch.p_loc.x);
 	return (flf_check(parser->cpy_sq_map));

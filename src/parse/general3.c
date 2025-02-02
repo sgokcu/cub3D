@@ -44,12 +44,7 @@ void	initialize_struct(t_main_parse *parse_struct)
 	parse_struct->map_size.y = 0;
 	parse_struct->map_size.y = 0;
 	parse_struct->map_size.x = 0;
-	parse_struct->entity_counts.EA_count = 0;
-	parse_struct->entity_counts.WE_count = 0;
-	parse_struct->entity_counts.SO_count = 0;
-	parse_struct->entity_counts.NO_count = 0;
-	parse_struct->entity_counts.F_count = 0;
-	parse_struct->entity_counts.C_count = 0;
+	reset_entity_count(parse_struct);
 	parse_struct->no_texture_path = NULL;
 	parse_struct->ea_texture_path = NULL;
 	parse_struct->so_texture_path = NULL;
@@ -59,16 +54,16 @@ void	initialize_struct(t_main_parse *parse_struct)
 	parse_struct->s_line = NULL;
 }
 
-int file_name_checker(char *file_path, char *extension)
+int	file_name_checker(char *file_path, char *extension)
 {
-	int file_path_len;
-	int i;
+	int	file_path_len;
+	int	i;
 
 	i = 3;
 	file_path_len = ft_strlen(file_path) - 1;
 	if (file_path[file_path_len] == '\n')
 		file_path_len--;
-	while(i)
+	while (i)
 	{
 		if (file_path[file_path_len] != extension[i])
 		{
@@ -81,11 +76,10 @@ int file_name_checker(char *file_path, char *extension)
 	return (1);
 }
 
-
-int comma_checker(char *num_set)
+int	comma_checker(char *num_set)
 {
-	int i;
-	int comma_count;
+	int	i;
+	int	comma_count;
 
 	i = 0;
 	comma_count = 0;

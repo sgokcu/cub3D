@@ -12,10 +12,10 @@
 
 #include "../cub3d.h"
 
-int floor_case(char *line, t_main_parse *parse)
+int	floor_case(char *line, t_main_parse *parse)
 {
-	char **splitted_nums;
-	char *num_set;
+	char	**splitted_nums;
+	char	*num_set;
 
 	if (parse->entity_counts.F_count++ > 0)
 		return (0);
@@ -23,27 +23,28 @@ int floor_case(char *line, t_main_parse *parse)
 	if (!comma_checker(num_set))
 		return (free(num_set), 0);
 	splitted_nums = ft_split(num_set, ',');
-	if (!splitted_nums || !splitted_nums[0] ||!splitted_nums[1] || !splitted_nums[2])
+	if (!splitted_nums || !splitted_nums[0]
+		|| !splitted_nums[1] || !splitted_nums[2])
 	{
 		ft_putstr_fd("Invalid Floor Case\n", 2);
 		free(num_set);
 		free_double_pointer(splitted_nums);
 		return (0);
 	}
-	if (!check_if_allocated(splitted_nums) || !fill_rgb_values(parse, splitted_nums, 'f'))
+	if (!check_if_allocated(splitted_nums)
+		|| !fill_rgb_values(parse, splitted_nums, 'f'))
 	{
 		free_double_pointer(splitted_nums);
 		return (free(num_set), 0);
 	}
 	free_double_pointer(splitted_nums);
-	free(num_set);
-	return (1);
+	return (free(num_set), 1);
 }
 
-int ceiling_case(char *line, t_main_parse *parse)
+int	ceiling_case(char *line, t_main_parse *parse)
 {
-	char **splitted_nums;
-	char *num_set;
+	char	**splitted_nums;
+	char	*num_set;
 
 	if (parse->entity_counts.C_count++ > 0)
 		return (0);
@@ -51,25 +52,25 @@ int ceiling_case(char *line, t_main_parse *parse)
 	if (!comma_checker(num_set))
 		return (free(num_set), 0);
 	splitted_nums = ft_split(num_set, ',');
-	if (!splitted_nums || !splitted_nums[0] ||!splitted_nums[1] || !splitted_nums[2])
+	if (!splitted_nums || !splitted_nums[0]
+		|| !splitted_nums[1] || !splitted_nums[2])
 	{
 		ft_putstr_fd("Invalid Ceiling Case\n", 2);
 		free(num_set);
 		free_double_pointer(splitted_nums);
 		return (0);
 	}
-	if (!check_if_allocated(splitted_nums) || !fill_rgb_values(parse, splitted_nums, 'c'))
+	if (!check_if_allocated(splitted_nums)
+		|| !fill_rgb_values(parse, splitted_nums, 'c'))
 	{
-		free(num_set);
 		free_double_pointer(splitted_nums);
-		return (0);
+		return (free(num_set), 0);
 	}
 	free_double_pointer(splitted_nums);
-	free(num_set);
-	return (1);
+	return (free(num_set), 1);
 }
 
-void free_textures(t_main_parse *parser)
+void	free_textures(t_main_parse *parser)
 {
 	if (parser->entity_counts.WE_count > 0)
 		free(parser->we_texture_path);
@@ -100,10 +101,10 @@ int	determine_type(char *line, t_main_parse *parse)
 	return (1);
 }
 
-int fill_textures(t_main_parse *parser)
+int	fill_textures(t_main_parse *parser)
 {
-	int	i;
-	char *current_line;
+	int		i;
+	char	*current_line;
 
 	i = 0;
 	while (parser->whole_file[i])

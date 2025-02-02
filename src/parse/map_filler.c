@@ -28,7 +28,7 @@ void	counterr(char *line, t_main_parse *parse)
 		parse->entity_counts.EA_count++;
 }
 
-void pass_blank(t_main_parse* parse, char *trimmed, int *i)
+void	pass_blank(t_main_parse *parse, char *trimmed, int *i)
 {
 	*i += 1;
 	while (parse->whole_file[*i])
@@ -44,13 +44,13 @@ void pass_blank(t_main_parse* parse, char *trimmed, int *i)
 	}
 }
 
-void go_eof(t_main_parse *parse, int *i)
+void	go_eof(t_main_parse *parse, int *i)
 {
-	while(parse->whole_file[*i])
+	while (parse->whole_file[*i])
 		*i += 1;
 }
 
-void pass_attributes(t_main_parse* parse, char *trimmed, int *i)
+void	pass_attributes(t_main_parse *parse, char *trimmed, int *i)
 {
 	while (parse->whole_file[*i])
 	{
@@ -58,15 +58,15 @@ void pass_attributes(t_main_parse* parse, char *trimmed, int *i)
 		counterr(trimmed, parse);
 		free(trimmed);
 		if (entity_validator(&parse->entity_counts))
-			break;
+			break ;
 		*i += 1;
 	}
 }
 
 int	fill_map(t_main_parse *parse)
 {
-	int i;
-	int map_start;
+	int	i;
+	int	map_start;
 
 	i = 0;
 	pass_attributes(parse, NULL, &i);

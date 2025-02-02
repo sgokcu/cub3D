@@ -12,7 +12,7 @@
 
 #include "../cub3d.h"
 
-int free_for_checker(t_main_parse *parser, int flag)
+int	free_for_checker(t_main_parse *parser, int flag)
 {
 	free(parser->file_path);
 	free_double_pointer(parser->whole_file);
@@ -21,7 +21,7 @@ int free_for_checker(t_main_parse *parser, int flag)
 	return (0);
 }
 
-int free_till_cpy(t_main_parse *parser, int flag)
+int	free_till_cpy(t_main_parse *parser, int flag)
 {
 	free(parser->file_path);
 	free_double_pointer(parser->whole_file);
@@ -35,19 +35,20 @@ int free_till_cpy(t_main_parse *parser, int flag)
 	return (0);
 }
 
-int name_checker_norm(t_main_parse *parser)
+int	name_checker_norm(t_main_parse *parser)
 {
-	if (!file_name_checker(parser->ea_texture_path, ".xpm") ||
-		!file_name_checker(parser->we_texture_path, ".xpm") ||
-		!file_name_checker(parser->so_texture_path, ".xpm") ||
-		!file_name_checker(parser->no_texture_path, ".xpm"))
+	if (!file_name_checker(parser->ea_texture_path, ".xpm")
+		|| !file_name_checker(parser->we_texture_path, ".xpm")
+		|| !file_name_checker(parser->so_texture_path, ".xpm")
+		|| !file_name_checker(parser->no_texture_path, ".xpm"))
 		return (0);
 	return (1);
 }
 
-int basic_checks(t_main_parse *parser_str, char *file_path)
+int	basic_checks(t_main_parse *parser_str, char *file_path)
 {
-	int fd;
+	int	fd;
+
 	if (!file_name_checker(file_path, ".cub"))
 		return (0);
 	parser_str->file_path = ft_strdup(file_path);
@@ -83,7 +84,8 @@ int	start_parse(char *file_path, t_main_parse *parser_str)
 	if (!parser_str->cpy_sq_map)
 		return (free_till_cpy(parser_str, 0));
 	single_line(parser_str);
-	if (!check_extra_horizontally(parser_str) || !blank_checker(parser_str->map))
+	if (!check_extra_horizontally(parser_str)
+		|| !blank_checker(parser_str->map))
 		return (free_till_cpy(parser_str, 1));
 	return (1);
 }

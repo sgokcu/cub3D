@@ -32,7 +32,7 @@ int	fill_rgb_values(t_main_parse *p, char **rgb, char c)
 	return (1);
 }
 
-char *get_nums(char *line, char c) // F veya C yolla
+char	*get_nums(char *line, char c)
 {
 	int	i;
 	int	x;
@@ -42,11 +42,11 @@ char *get_nums(char *line, char c) // F veya C yolla
 	while (line[i] && line[i] != '\n')
 	{
 		if (line[i] == c && line[i + 1] == 32)
-			break;
+			break ;
 		i++;
 	}
 	i += 2;
-	while(line[i] == 32)
+	while (line[i] == 32)
 		i++;
 	x = i;
 	while (line[i] && line[i] != '\n')
@@ -54,12 +54,9 @@ char *get_nums(char *line, char c) // F veya C yolla
 	return (ft_substr(line, x, i - x));
 }
 
-
-
-
-int check_extra_map_vertical(t_main_parse *parse, int i)
+int	check_extra_map_vertical(t_main_parse *parse, int i)
 {
-	char *temp;
+	char	*temp;
 
 	while (parse->map[i])
 	{
@@ -67,7 +64,7 @@ int check_extra_map_vertical(t_main_parse *parse, int i)
 		if (temp[0] == '\n')
 		{
 			free(temp);
-			break;
+			break ;
 		}
 		if (!temp[0])
 		{
@@ -86,17 +83,17 @@ int check_extra_map_vertical(t_main_parse *parse, int i)
 	return (1);
 }
 
-int invalid_component_check(t_main_parse *parse)
+int	invalid_component_check(t_main_parse *parse)
 {
 	int	i;
 	int	j;
-	int f;
+	int	f;
 
-	i = 0;
-	while (parse->map[i])
+	i = -1;
+	while (parse->map[++i])
 	{
 		j = 0;
-		while(parse->map[i][j])
+		while (parse->map[i][j])
 		{
 			f = component_verifier(parse->map[i][j]);
 			if (f == 0)
@@ -111,15 +108,14 @@ int invalid_component_check(t_main_parse *parse)
 			}
 			j++;
 		}
-		i++;
 	}
 	return (1);
 }
 
-int blank_checker(char **map)
+int	blank_checker(char **map)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	while (map[y])
@@ -127,7 +123,8 @@ int blank_checker(char **map)
 		x = 0;
 		while (map[y][x])
 		{
-			if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W')
+			if (map[y][x] == '0' || map[y][x] == 'N' ||
+				map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'W')
 				if (!checker(map, y, x))
 					return (0);
 			x++;

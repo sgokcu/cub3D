@@ -31,8 +31,8 @@ int	count_lines_of_file(int fd)
 
 int	fill_whole_file(t_main_parse *parse_struct, int fd)
 {
-	int line_count;
-	int i;
+	int	line_count;
+	int	i;
 
 	i = -1;
 	line_count = count_lines_of_file(fd);
@@ -58,61 +58,21 @@ int	fill_whole_file(t_main_parse *parse_struct, int fd)
 	return (1);
 }
 
-void fill_index(int i, t_main_parse *parser, char **sq_map)
+void	fill_index(int i, t_main_parse *parser, char **sq_map)
 {
-	int y = 0;
+	int	y;
+
+	y = 0;
 	sq_map[i] = malloc(sizeof(char) * (parser->map_size.x + 3));
 	while (y < parser->map_size.x + 2)
 		sq_map[i][y++] = CHAR;
 	sq_map[i][y] = '\0';
 }
 
-char **cpy_sq_map(char **map, t_main_parse *parser)
+char	**strdup_double(char **str)
 {
-	int max_y;
-	int i;
-	int y;
-	char **sq_map;
-
-	max_y = 0;
-	while (map[max_y])
-		max_y++;
-	if (max_y < 3)
-		return (NULL);
-	parser->map_size.x = get_max_x(map);
-	sq_map = malloc(sizeof(char *) * (max_y + 3));
-	fill_index(0, parser, sq_map);
-	y = 1;
-	while (map[y - 1])
-	{
-		i = 1;
-		sq_map[y] = malloc(sizeof(char) * (parser->map_size.x + 3));
-		sq_map[y][0] = CHAR;
-		while (map[y - 1][i - 1])
-		{
-			sq_map[y][i] = map[y - 1][i - 1];
-			i++;
-		}
-		while (i < (parser->map_size.x + 2))
-		{
-			sq_map[y][i] = CHAR;
-			i++;
-		}
-		sq_map[y][i] = '\0';
-		y++;
-	}
-	fill_index(y, parser, sq_map);
-	sq_map[y + 1] = NULL;
-	parser->map_size.y = y + 1;
-	parser->map_size.x += 2;
-	return (sq_map);
-}
-
-
-char **strdup_double(char **str)
-{
-	char **ret;
-	int	i;
+	char	**ret;
+	int		i;
 
 	i = 0;
 	while (str[i])

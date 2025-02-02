@@ -12,9 +12,9 @@
 
 #include "../cub3d.h"
 
-int north_case(char *line, t_main_parse *parse)
+int	north_case(char *line, t_main_parse *parse)
 {
-	char **splitted_line;
+	char	**splitted_line;
 
 	if (parse->entity_counts.NO_count++ > 0)
 		return (0);
@@ -30,9 +30,9 @@ int north_case(char *line, t_main_parse *parse)
 	return (1);
 }
 
-int south_case(char *line, t_main_parse *parse)
+int	south_case(char *line, t_main_parse *parse)
 {
-	char **splitted_line;
+	char	**splitted_line;
 
 	if (parse->entity_counts.SO_count++ > 0)
 		return (0);
@@ -48,9 +48,9 @@ int south_case(char *line, t_main_parse *parse)
 	return (1);
 }
 
-int west_case(char *line, t_main_parse *parse)
+int	west_case(char *line, t_main_parse *parse)
 {
-	char **splitted_line;
+	char	**splitted_line;
 
 	if (parse->entity_counts.WE_count++ > 0)
 		return (0);
@@ -66,9 +66,9 @@ int west_case(char *line, t_main_parse *parse)
 	return (1);
 }
 
-int east_case(char *line, t_main_parse *parse)
+int	east_case(char *line, t_main_parse *parse)
 {
-	char **splitted_line;
+	char	**splitted_line;
 
 	if (parse->entity_counts.EA_count++ > 0)
 		return (0);

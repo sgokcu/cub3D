@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main.c                                       :+:      :+:    :+:   */
+/*   general.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:19:56 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 14:51:08 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	reset_entity_count(t_main_parse *parse)
 {
-	parse->entity_counts.EA_count = 0;
-	parse->entity_counts.WE_count = 0;
-	parse->entity_counts.NO_count = 0;
-	parse->entity_counts.SO_count = 0;
-	parse->entity_counts.F_count = 0;
-	parse->entity_counts.C_count = 0;
+	parse->entity_counts.ea_count = 0;
+	parse->entity_counts.we_count = 0;
+	parse->entity_counts.no_count = 0;
+	parse->entity_counts.so_count = 0;
+	parse->entity_counts.f_count = 0;
+	parse->entity_counts.c_count = 0;
 }
 
 void	clean_newlines(char **map, int i)

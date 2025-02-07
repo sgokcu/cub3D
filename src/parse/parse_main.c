@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:19:56 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 19:36:22 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int	start_parse(char *file_path, t_main_parse *parser_str)
 	if (!fill_textures(parser_str))
 		free_for_checker(parser_str, 0);
 	if (!name_checker_norm(parser_str))
+	{
 		free_for_checker(parser_str, 1);
+		return (0);
+	}
 	reset_entity_count(parser_str);
 	fill_map(parser_str);
 	if (!check_extra_map_vertical(parser_str, 0))

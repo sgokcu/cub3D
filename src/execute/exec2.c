@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:20:14 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 17:08:54 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	ft_swap_int(int *a, int *b)
 {
@@ -60,7 +60,7 @@ void	rotate_index(t_img *tex)
 	}
 }
 
-static void	init_tex(t_cub3D *cub3d, t_img *tex, char *path)
+void	init_tex(t_cub3D *cub3d, t_img *tex, char *path)
 {
 	tex->img = mlx_xpm_file_to_image(cub3d->mlx.mlx, path,
 			&tex->size_line, &tex->line_count);
@@ -80,6 +80,7 @@ void	init_all(t_cub3D *cub3d, t_main_parse *parser)
 	cub3d->p = parser;
 	cub3d->inputs = (t_input){0};
 	cub3d->mlx.mlx = mlx_init();
+	init_2(parser, cub3d);
 	cub3d->floor.blue = parser->f_blue;
 	cub3d->floor.red = parser->f_red;
 	cub3d->floor.green = parser->f_green;
@@ -93,6 +94,7 @@ void	init_all(t_cub3D *cub3d, t_main_parse *parser)
 	mirror_tex(&cub3d->tex_north);
 	mirror_tex(&cub3d->tex_east);
 	init_win(cub3d);
+	init_map(cub3d);
 	init_player(cub3d);
 	mlx_put_image_to_window(cub3d->mlx.mlx, cub3d->mlx.win.win,
 		cub3d->mlx.img.img, 0, 0);

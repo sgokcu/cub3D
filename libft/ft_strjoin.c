@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 14:49:15 by erkoc             #+#    #+#             */
-/*   Updated: 2023/12/19 16:24:44 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 19:03:20 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*allocated;
 	size_t	i;
 	size_t	y;
-	
+
 	if (!s1)
 		return (ft_strdup(s2));
 	i = 0;

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec6.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:20:14 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 15:40:41 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
-static t_vec2	hit_vert(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
+t_vec2	hit_vert(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
 {
 	t_raycast	ray;
 
@@ -35,7 +35,7 @@ static t_vec2	hit_vert(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
 	return (g_vec2_null);
 }
 
-static void	hori_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir)
+void	hori_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir)
 {
 	if (dir.y < 0)
 	{
@@ -51,7 +51,7 @@ static void	hori_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir)
 	}
 }
 
-static t_vec2	hit_hori(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
+t_vec2	hit_hori(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, float *dist)
 {
 	t_raycast	ray;
 
@@ -101,7 +101,7 @@ void	raycast(t_cub3D *cub3d, t_vec2 start, t_vec2 dir, t_hit *out)
 	}
 }
 
-static void	ray_modify(t_cub3D *cub3d)
+void	ray_modify(t_cub3D *cub3d)
 {
 	int		i;
 	float	deg_step;

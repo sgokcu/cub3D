@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main.c                                       :+:      :+:    :+:   */
+/*   texture_filler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:19:56 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 14:52:47 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	floor_case(char *line, t_main_parse *parse)
 	char	**splitted_nums;
 	char	*num_set;
 
-	if (parse->entity_counts.F_count++ > 0)
+	if (parse->entity_counts.f_count++ > 0)
 		return (0);
 	num_set = get_nums(line, 'F');
 	if (!comma_checker(num_set))
@@ -46,7 +46,7 @@ int	ceiling_case(char *line, t_main_parse *parse)
 	char	**splitted_nums;
 	char	*num_set;
 
-	if (parse->entity_counts.C_count++ > 0)
+	if (parse->entity_counts.c_count++ > 0)
 		return (0);
 	num_set = get_nums(line, 'C');
 	if (!comma_checker(num_set))
@@ -72,13 +72,13 @@ int	ceiling_case(char *line, t_main_parse *parse)
 
 void	free_textures(t_main_parse *parser)
 {
-	if (parser->entity_counts.WE_count > 0)
+	if (parser->entity_counts.we_count > 0)
 		free(parser->we_texture_path);
-	if (parser->entity_counts.NO_count > 0)
+	if (parser->entity_counts.no_count > 0)
 		free(parser->no_texture_path);
-	if (parser->entity_counts.SO_count > 0)
+	if (parser->entity_counts.so_count > 0)
 		free(parser->so_texture_path);
-	if (parser->entity_counts.EA_count > 0)
+	if (parser->entity_counts.ea_count > 0)
 		free(parser->ea_texture_path);
 }
 

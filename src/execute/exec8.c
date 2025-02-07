@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec8.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:20:14 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 15:36:52 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 float	ft_normalize(float val, float min, float max)
 {
@@ -30,7 +30,7 @@ t_color	*get_tex_data(t_img *tex, float tex_x)
 				0, tex->size_line) * tex->size_line));
 }
 
-static void	draw_face(struct s_draw_hlpr drw)
+void	draw_face(struct s_draw_hlpr drw)
 {
 	int		i;
 	float	tex_y;
@@ -58,7 +58,7 @@ static void	draw_face(struct s_draw_hlpr drw)
 	}
 }
 
-static void	draw_wall_piece(t_cub3D *cub3d, float lh, int index, t_face face)
+void	draw_wall_piece(t_cub3D *cub3d, float lh, int index, t_face face)
 {
 	float	pos_x;
 	float	pos_y;

@@ -1,23 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:20:14 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:49:36 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int	ft_exit(void *cub3d)
 {
 	t_cub3D	*game;
 
 	game = (t_cub3D *)cub3d;
+	free(game->p->s_line);
+	free(game->p->file_path);
+	free(game->p->ea_texture_path);
+	free(game->p->we_texture_path);
+	free(game->p->so_texture_path);
+	free(game->p->no_texture_path);
+	free_double_pointer(game->p->map);
+	free_double_pointer(game->p->whole_file);
+	free_double_pointer(game->p->cpy_sq_map);
 	mlx_destroy_window(game->mlx.mlx, game->mlx.win.win);
+	mlx_destroy_image(game->mlx.mlx, game->mlx.img.img);
+	mlx_destroy_image(game->mlx.mlx, game->tex_east.img);
+	mlx_destroy_image(game->mlx.mlx, game->tex_west.img);
+	mlx_destroy_image(game->mlx.mlx, game->tex_north.img);
+	mlx_destroy_image(game->mlx.mlx, game->tex_south.img);
+	mlx_destroy_display(game->mlx.mlx);
+	free(game->mlx.mlx);
 	exit(EXIT_SUCCESS);
 }
 

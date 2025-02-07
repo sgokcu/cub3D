@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec5.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:20:14 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 15:35:15 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	rotate_camera(t_cub3D *cub3d, t_bool rotate_dir)
 {
@@ -35,7 +35,7 @@ void	player_modify(t_cub3D *cub3d)
 	player_movement(cub3d, move_dir);
 }
 
-static void	vert_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir)
+void	vert_hit_regulator(t_raycast *ray, t_vec2 start, t_vec2 dir)
 {
 	if (dir.x < 0)
 	{

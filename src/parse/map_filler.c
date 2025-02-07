@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main.c                                       :+:      :+:    :+:   */
+/*   map_filler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:19:56 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 14:52:47 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	counterr(char *line, t_main_parse *parse)
 {
 	if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
-		parse->entity_counts.NO_count++;
+		parse->entity_counts.no_count++;
 	else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
-		parse->entity_counts.SO_count++;
+		parse->entity_counts.so_count++;
 	else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
-		parse->entity_counts.WE_count++;
+		parse->entity_counts.we_count++;
 	else if (line[0] == 'F' && line[1] == ' ')
-		parse->entity_counts.F_count++;
+		parse->entity_counts.f_count++;
 	else if (line[0] == 'C' && line[1] == ' ')
-		parse->entity_counts.C_count++;
+		parse->entity_counts.c_count++;
 	else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
-		parse->entity_counts.EA_count++;
+		parse->entity_counts.ea_count++;
 }
 
 void	pass_blank(t_main_parse *parse, char *trimmed, int *i)

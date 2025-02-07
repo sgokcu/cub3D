@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main.c                                       :+:      :+:    :+:   */
+/*   basic_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:19:56 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 19:02:23 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,15 @@ int	get_max_x(char **map)
 
 void	single_line(t_main_parse *parser)
 {
-	int	i;
+	char	*temp;
+	int		i;
 
 	i = 0;
 	while (parser->cpy_sq_map[i])
 	{
+		temp = parser->s_line;
 		parser->s_line = ft_strjoin(parser->s_line, parser->cpy_sq_map[i]);
+		free(temp);
 		i++;
 	}
 }

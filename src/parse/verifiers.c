@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main.c                                       :+:      :+:    :+:   */
+/*   verifiers.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:19:56 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 14:52:47 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 int	count_verifier(t_main_parse *parser)
 {
-	if (parser->entity_counts.C_count == 1
-		&& parser->entity_counts.EA_count == 1
-		&& parser->entity_counts.F_count == 1
-		&& parser->entity_counts.NO_count == 1
-		&& parser->entity_counts.SO_count == 1
-		&& parser->entity_counts.WE_count == 1)
+	if (parser->entity_counts.c_count == 1
+		&& parser->entity_counts.ea_count == 1
+		&& parser->entity_counts.f_count == 1
+		&& parser->entity_counts.no_count == 1
+		&& parser->entity_counts.so_count == 1
+		&& parser->entity_counts.we_count == 1)
 		return (1);
 	return (0);
 }
 
 int	entity_validator(t_intptr *ct)
 {
-	if (ct->EA_count == 1 && ct->WE_count == 1
-		&& ct->SO_count == 1 && ct->NO_count == 1
-		&& ct->F_count == 1 && ct->C_count == 1)
+	if (ct->ea_count == 1 && ct->we_count == 1
+		&& ct->so_count == 1 && ct->no_count == 1
+		&& ct->f_count == 1 && ct->c_count == 1)
 		return (1);
 	return (0);
 }

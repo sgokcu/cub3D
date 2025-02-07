@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:20:14 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 18:47:37 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	cub3d(char **av)
 	if (!start_parse(av[1], &parser))
 	{
 		ft_putstr_fd("Parse Error\n", 2);
+		free(parser.s_line);
 		exit(0);
 	}
 	init_all(&cub3d, &parser);
@@ -81,7 +82,6 @@ void	cub3d(char **av)
 		Destroy, (1 << 17), ft_exit, &cub3d);
 	mlx_loop_hook(cub3d.mlx.mlx, modify, &cub3d);
 	mlx_loop(cub3d.mlx.mlx);
-	free_all(&parser);
 	return ;
 }
 

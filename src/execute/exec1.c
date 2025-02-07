@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:20:14 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 17:02:43 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 float	ft_rad_to_deg(float rad)
 {
@@ -29,7 +29,7 @@ void	init_map(t_cub3D *cub3d)
 	}
 }
 
-static void	init_player(t_cub3D *cub3d)
+void	init_player(t_cub3D *cub3d)
 {
 	cub3d->player.pos.x = (float)cub3d->p->ch.p_loc.x + 1.5;
 	cub3d->player.pos.y = (float)cub3d->p->ch.p_loc.y + 1.5;

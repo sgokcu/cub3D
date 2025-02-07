@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_main.c                                       :+:      :+:    :+:   */
+/*   cases.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erkoc <erkoc@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2024/11/29 19:19:56 by erkoc            ###   ########.fr       */
+/*   Updated: 2025/02/07 14:52:30 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	north_case(char *line, t_main_parse *parse)
 {
 	char	**splitted_line;
 
-	if (parse->entity_counts.NO_count++ > 0)
+	if (parse->entity_counts.no_count++ > 0)
 		return (0);
 	splitted_line = ft_split(line, ' ');
 	if (!splitted_line || !splitted_line[1])
@@ -34,7 +34,7 @@ int	south_case(char *line, t_main_parse *parse)
 {
 	char	**splitted_line;
 
-	if (parse->entity_counts.SO_count++ > 0)
+	if (parse->entity_counts.so_count++ > 0)
 		return (0);
 	splitted_line = ft_split(line, ' ');
 	if (!splitted_line || !splitted_line[1])
@@ -52,7 +52,7 @@ int	west_case(char *line, t_main_parse *parse)
 {
 	char	**splitted_line;
 
-	if (parse->entity_counts.WE_count++ > 0)
+	if (parse->entity_counts.we_count++ > 0)
 		return (0);
 	splitted_line = ft_split(line, ' ');
 	if (!splitted_line || !splitted_line[1])
@@ -70,7 +70,7 @@ int	east_case(char *line, t_main_parse *parse)
 {
 	char	**splitted_line;
 
-	if (parse->entity_counts.EA_count++ > 0)
+	if (parse->entity_counts.ea_count++ > 0)
 		return (0);
 	splitted_line = ft_split(line, ' ');
 	if (!splitted_line || !splitted_line[1])

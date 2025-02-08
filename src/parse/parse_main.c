@@ -6,7 +6,7 @@
 /*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2025/02/07 19:36:22 by sgokcu           ###   ########.fr       */
+/*   Updated: 2025/02/08 14:17:15 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@ int	free_for_checker(t_main_parse *parser, int flag)
 {
 	free(parser->file_path);
 	free_double_pointer(parser->whole_file);
+	if (parser->no_texture_path)
+		free(parser->no_texture_path);
+	if (parser->so_texture_path)
+		free(parser->so_texture_path);
+	if (parser->ea_texture_path)
+		free(parser->ea_texture_path);
+	if (parser->we_texture_path)
+		free(parser->we_texture_path);
 	if (flag)
 		free_textures(parser);
 	return (0);
@@ -70,7 +78,7 @@ int	start_parse(char *file_path, t_main_parse *parser_str)
 	if (!basic_checks(parser_str, file_path))
 		return (0);
 	if (!fill_textures(parser_str))
-		free_for_checker(parser_str, 0);
+		return (free_for_checker(parser_str, 0));
 	if (!name_checker_norm(parser_str))
 	{
 		free_for_checker(parser_str, 1);

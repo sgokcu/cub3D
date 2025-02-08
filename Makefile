@@ -1,6 +1,6 @@
 MLX_FLAGS = -Lmlx -lmlx -lXext -lX11 -lm
 MAKEFLAGS += --no-print-directory
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 LIBFT = libft/libft.a
 NAME = cub3D
 CC = gcc

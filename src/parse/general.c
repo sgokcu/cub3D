@@ -6,7 +6,7 @@
 /*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 15:40:17 by erkoc             #+#    #+#             */
-/*   Updated: 2025/02/07 14:51:08 by sgokcu           ###   ########.fr       */
+/*   Updated: 2025/02/08 19:45:17 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int	flf_check(char **map)
 
 int	check_extra_horizontally(t_main_parse *parser)
 {
-	f_fill(parser, parser->ch.p_loc.y, parser->ch.p_loc.x);
+	f_fill(parser, parser->ch.p_loc.y + 1, parser->ch.p_loc.x + 1);
 	return (flf_check(parser->cpy_sq_map));
 }

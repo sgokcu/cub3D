@@ -1,9 +1,12 @@
-NO ./textures/BrickGrey.xpm
+NO              ./textures/BrickGrey.xpm
 SO ./textures/BrickGrey.xpm
 WE ./textures/BrickGrey.xpm
 EA ./textures/BrickGrey.xpm
 F 220,100,0
 C 225,30,0
+
+
+
 
 111
 1N1

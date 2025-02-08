@@ -6,7 +6,7 @@
 /*   By: sgokcu <sgokcu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 17:29:33 by erkoc             #+#    #+#             */
-/*   Updated: 2025/02/07 16:55:09 by sgokcu           ###   ########.fr       */
+/*   Updated: 2025/02/08 14:58:04 by sgokcu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	player_collision(t_cub3D *cub3d, t_vec2 next_pos)
 	}
 	else
 	{
-		if (cub3d->p->s_line[(int)(next_pos.x - PLAYER_SIZE + 1)
+		if (cub3d->p->s_line[(int)(next_pos.x - PLAYER_SIZE)
 			+ ((int)cub3d->player.pos.y * cub3d->map.size.x)] != '1')
 			cub3d->player.pos.x = next_pos.x;
 	}
